@@ -1,0 +1,64 @@
+1:reserved word:program
+1:ID, name= p
+2:reserved word: type
+2:ID, name= t1
+2:＝
+2:reserved word :integer
+2:，
+3:reserved word :var
+3:reserved word :integer
+3:ID,name= v1
+3:，
+3:ID,name= v2
+3:，
+4:reserved word:procedure
+4:ID, name= q
+4:(
+4:reserved word:integer
+4:ID, name= 1
+4:)
+4:，
+5:reserved word :var
+5:reserved word :integer
+5:ID, name= a 5	，
+6:reserved word:begm
+7:ID, name= a
+7::＝
+7:ID, name= 1
+7:，
+8:reserved word: write
+8:（
+8:ID, name= a
+8:）
+9:reserved word:end
+10 :reserved word:begm
+11 :reserved word:read
+11 :(
+11:ID, name=v1
+11:)
+11:，
+12 :reserved word:if
+12:ID, name= v1
+12:＜
+12:INTC, val= 10
+12: reserved word:then
+12:ID, name= v1
+12::＝
+12:ID, name= v1
+12:＋
+12:INTC, val= 10
+12 :reserved word:else
+12:ID, name= v1
+12::＝
+12:ID, name= v1
+12:-
+12:INTC, val= 10
+12 :reserved word:fi
+12:;
+13:ID, name= q
+13 :(
+13:ID, name= v1
+13:)
+14 :reserved word:end
+15:.
+16:EOF

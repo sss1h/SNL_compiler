@@ -1,0 +1,9 @@
+﻿  parse.cpp
+c:\users\jlu\desktop\parse\parse\parse.cpp(1337): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\jlu\desktop\parse\parse\parse.cpp(1355): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\jlu\desktop\parse\parse\parse.cpp(1439): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\jlu\desktop\parse\parse\parse.cpp(1461): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\jlu\desktop\parse\parse\parse.cpp(270): warning C4715: “TypeDec”: 不是所有的控件路径都返回值
+c:\users\jlu\desktop\parse\parse\parse.cpp(342): warning C4715: “TypeDecMore”: 不是所有的控件路径都返回值
+c:\users\jlu\desktop\parse\parse\parse.cpp(551): warning C4715: “FieldDecMore”: 不是所有的控件路径都返回值
+  parse.vcxproj -> C:\Users\jlu\Desktop\parse\x64\Debug\parse.exe
