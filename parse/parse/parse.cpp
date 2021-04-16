@@ -95,15 +95,12 @@ int main()
 TreeNode* parse(void)
 {
     TreeNode* t = nullptr;
+    ReadWord();
     t = Program();
 
-    ReadWord();
+    
 
-    if (tok.Lex == EOF)
-    {
-        ;
-    }
-    else
+    if (tok.Lex != EOF)
     {
         //文件提前结束错误处理
         cout << tok.Lineshow<<" 文件提前结束错误" << endl;
@@ -155,7 +152,7 @@ TreeNode* Program(void)
         
     }
 
-    ReadWord();
+    
 
     match(DOT);
     //当前单词和DOT匹配
@@ -169,12 +166,12 @@ TreeNode* ProgramHead(void)
     //创建新的程序头类型节点
     TreeNode* t = nullptr;
     t = new TreeNode;
-    ReadWord();
+    
  
     match(PROGRAM);
 
 
-    ReadWord();
+    
 
     //新语法树节点t创建成功，当前单词为ID
     
@@ -242,7 +239,7 @@ TreeNode* DeclarePart(void)
 TreeNode* TypeDec(void)
 {
     TreeNode* t = new TreeNode;
-    ReadWord();
+    
 
     if (tok.Lex == TYPE)
     {
@@ -292,12 +289,13 @@ TreeNode* TypeDecList(void)
     {
         string token;
         TypeId(t);
-        ReadWord();
+        
         
         match(EQ);
-		ReadWord();//todo readword
+		
         TypeDef(t);
-        ReadWord();
+        
+
         match(SEMI);
 
 
@@ -322,7 +320,7 @@ TreeNode* TypeDecList(void)
 //8.类型声明中的其他函数
 TreeNode* TypeDecMore(void)
 {
-    ReadWord();
+    
 
 
     TreeNode* t = nullptr;
@@ -345,7 +343,7 @@ TreeNode* TypeDecMore(void)
 //9.类型声明中的其他函数
 void TypeId(TreeNode* t)
 {
-    ReadWord();
+    
     if (tok.Lex == ID && t != nullptr)
     {
         int tnum = t->attr.idnum;
@@ -353,6 +351,7 @@ void TypeId(TreeNode* t)
         tnum++;
         t->attr.idnum = tnum;
     }
+    match(ID);
 }
 
 
@@ -360,7 +359,7 @@ void TypeId(TreeNode* t)
 void TypeDef(TreeNode* t)
 {
     
-    //ReadWord();//todo val=
+    
     if (t != nullptr)
     {
         if (tok.Lex == INTEGER || tok.Lex == CHAR1)
@@ -445,9 +444,9 @@ void StructureType(TreeNode* t)
 void ArrayType(TreeNode* t)
 {
     match(ARRAY);
-    ReadWord();
+    
     match(LMIDPAREN);
-    ReadWord();
+    
     if (tok.Lex == INTC)
     {
 
@@ -455,7 +454,7 @@ void ArrayType(TreeNode* t)
     }
 
     match(INTC);
-    ReadWord();
+    
     match(UNDERANGE);
     if (tok.Lex == INTC)
     {
@@ -463,9 +462,7 @@ void ArrayType(TreeNode* t)
     }
 
     match(INTC);
-    ReadWord();
     match(RMIDPAREN);
-    ReadWord();
     match(OF);
     BaseType(t);
     t->attr.arrayattr.childType = t->kind.dec;
@@ -488,7 +485,7 @@ void RecType(TreeNode *t)
 		// error hint
 		cout << "line:" << lineno << "error" << endl;
 	}
-	ReadWord();
+	
 
 	match(END1);
 }
@@ -622,7 +619,7 @@ TreeNode* VarDecList(void)
     TreeNode* p = nullptr;
     if (t != nullptr)
     {
-		ReadWord();
+		
         TypeDef(t);
         VarIdList(t);
         match(SEMI);
@@ -636,7 +633,7 @@ TreeNode* VarDecList(void)
 //todo 22 
 TreeNode* VarDecMore(void)
 {
-	ReadWord();
+	
     TreeNode* t = nullptr;
     if (tok.Lex == PROCEDURE || tok.Lex == BEGIN1)
     {
@@ -660,7 +657,7 @@ TreeNode* VarDecMore(void)
 //23
 void VarIdList(TreeNode* t)
 {
-	ReadWord();
+	
     if (tok.Lex == ID)
     {
         t->attr.name.push_back(tok.Sem);
@@ -679,7 +676,7 @@ void VarIdList(TreeNode* t)
 //todo 24 
 void VarIdMore(TreeNode* t)
 {
-	ReadWord();
+    ReadWord();
 	if (tok.Lex != SEMI)
 	{
 		if (tok.Lex == COMMA)
@@ -722,7 +719,7 @@ TreeNode* ProcDeclaration(void)
 	match(PROCEDURE);
 	if (t != nullptr)
 	{
-		ReadWord();
+		
 		if (tok.Lex == ID)
 		{
 			t->attr.name.push_back(tok.Sem);//记录函数名
@@ -730,12 +727,12 @@ TreeNode* ProcDeclaration(void)
 			match(ID);
 
 		}
-		ReadWord();
+		
 		match(LPAREN);
 		ParamList(t);
 		//ReadWord();
 		match(RPAREN);
-		ReadWord();
+		
 		//match(COLON);
 		match(SEMI);
 		t->child[1] = ProcDecPart();
@@ -749,10 +746,10 @@ TreeNode* ProcDeclaration(void)
 }
 
 
-//todo 27
+//27
 void ParamList(TreeNode* t)
 {
-	ReadWord();
+	
 	TreeNode* p = nullptr;
 	if (tok.Lex != RPAREN)
 	{
@@ -908,7 +905,7 @@ TreeNode* ProgramBody()
 }
 
 
-//36
+//36 ****
 TreeNode* StmList()
 {
 	TreeNode* t = Stm();
@@ -946,7 +943,7 @@ string temp_name;
 //todo 38
 TreeNode* Stm()
 {
-	ReadWord();
+	
 	TreeNode* t = nullptr;
 	switch (tok.Lex)
 	{
@@ -971,7 +968,7 @@ TreeNode* Stm()
 //39
 TreeNode* AssCall()
 {
-	ReadWord();
+	ReadWord();//todo assign
 	TreeNode* t = nullptr;
 	if (tok.Lex == ASSIGN)
 	{
@@ -1082,7 +1079,7 @@ TreeNode* OutputStm()
 	TreeNode* t = nullptr;
 	t = new TreeNode;
 	match(WRITE);
-	ReadWord();
+	
 	match(LPAREN);
 	if (t != nullptr)
 	{
@@ -1198,6 +1195,14 @@ TreeNode* Simple_exp()
             t = p;
         }
         //match
+        if (tok.Lex == PLUS)
+        {
+            match(PLUS);
+        }
+        else
+        {
+            match(MINUS);
+        }
         t->child[1] = term();//作为运算简单表达式的右运算项
 		
     }
@@ -1214,7 +1219,7 @@ TreeNode* Simple_exp()
 TreeNode* term()
 {
     TreeNode* t = factor();
-	ReadWord();
+	//ReadWord();
     while (tok.Lex == TIMES || tok.Lex == OVER)
     {
         TreeNode* p = nullptr;
@@ -1226,6 +1231,14 @@ TreeNode* term()
             t = p;
         }
         //match
+        if (tok.Lex == TIMES)
+        {
+            match(TIMES);
+        }
+        else
+        {
+            match(OVER);
+        }
         t->child[1] = factor();//作为运算项的右运算因子
 		
     }
@@ -1239,7 +1252,7 @@ TreeNode* term()
 //52
 TreeNode* factor()
 {
-	ReadWord();
+	
     TreeNode* t = nullptr;
     switch (tok.Lex)
     {
@@ -1420,7 +1433,7 @@ void match(LexType expected)
 
     if (tok.Lex == expected)
     {
-        ;
+        ReadWord();
     }
     else
     {
