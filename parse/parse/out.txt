@@ -47,7 +47,7 @@
 13: :=
 13: ID,name= v1
 13: +
-13: INTC,val= 1
+13: INTC,val= 10
 13: ERROR
 14: reserved word: else
 14: ID,name= v1

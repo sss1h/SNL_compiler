@@ -42,14 +42,11 @@ static struct
 		{"endwh",ENDWH},{"begin",BEGIN1},{"end",END1},{"read",READ},{"write",WRITE},
 		{"array",ARRAY},{"of",OF},{"record",RECORD}, {"return",RETURN1},{"integer",INTEGER},
 		{"char",CHAR1},{"ID",ID},{"INTC",INTC},{"CHARC",CHARC},
-		//{"assign",ASSIGN},{"eq",EQ},{"lt",LT,},{"plus",PLUS},{"minus",MINUS},{"times",TIMES},{"over",OVER},
-		//{"lparen",LPAREN},{"rparen",RPAREN},{"dot",DOT},{"colon",COLON},{"semi",SEMI},{"comma",COMMA},
-		//{"lmidparen",LMIDPAREN},{"rmidraren",RMIDPAREN},{"underange",UNDERANGE},
+		
 
-		{":=",ASSIGN},{"=",EQ},{"<",LT,},{"+",PLUS},{"-",MINUS},{"*",TIMES},{"/",OVER},
-		{"(",LPAREN},{")",RPAREN},{".",DOT},{":",COLON},{";",SEMI},{",",COMMA},
-		{"[",LMIDPAREN},{"]",RMIDPAREN},{"..",UNDERANGE},
-
-		{"program",PROGRAM},{"error",ERROR}
+		{":=",ASSIGN},{"=",EQ},{"<",LT,},{"+",PLUS},{"-",MINUS},
+		{"*",TIMES},{"/",OVER},{"(",LPAREN},{")",RPAREN},{".",DOT},
+		{":",COLON},{";",SEMI},{",",COMMA},{"[",LMIDPAREN},{"]",RMIDPAREN},
+		{"..",UNDERANGE},{"EOF",ENDFILE},{"ERROR",ERROR}
 	};
 

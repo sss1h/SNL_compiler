@@ -1,8 +1,8 @@
 ﻿  parse.cpp
-C:\Users\No.6\Desktop\compile\parse\parse\parse.cpp(1350,21): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\No.6\Desktop\compile\parse\parse\parse.cpp(1368,21): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\No.6\Desktop\compile\parse\parse\parse.cpp(1452,44): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\No.6\Desktop\compile\parse\parse\parse.cpp(1474,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\No.6\Desktop\compile\parse\parse\parse.cpp(1362,21): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\No.6\Desktop\compile\parse\parse\parse.cpp(1380,21): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\No.6\Desktop\compile\parse\parse\parse.cpp(1472,44): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\No.6\Desktop\compile\parse\parse\parse.cpp(1494,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\No.6\Desktop\compile\parse\parse\parse.cpp(267): warning C4715: 'TypeDec': not all control paths return a value
 C:\Users\No.6\Desktop\compile\parse\parse\parse.cpp(340): warning C4715: 'TypeDecMore': not all control paths return a value
 C:\Users\No.6\Desktop\compile\parse\parse\parse.cpp(548): warning C4715: 'FieldDecMore': not all control paths return a value

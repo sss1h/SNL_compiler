@@ -100,7 +100,7 @@ TreeNode* parse(void)
 
     
 
-    if (tok.Lex != EOF)
+    if (tok.Lex != ENDFILE)
     {
         //文件提前结束错误处理
         cout << tok.Lineshow<<" 文件提前结束错误" << endl;
@@ -115,7 +115,7 @@ TreeNode* Program(void)
     TreeNode *t = nullptr, *q = nullptr, *s = nullptr;
     t = ProgramHead();
     q = DeclarePart();
-	ReadWord();//todo readword
+	
     s = ProgramBody();
     TreeNode*root = new TreeNode;
     if (root == nullptr)//创建失败
@@ -953,6 +953,7 @@ TreeNode* Stm()
 	case READ: t = InputStm(); break;
 	case WRITE: t = OutputStm(); break;
 	case ID: 
+        match(ID);//todo match(id)
 		temp_name = tok.Sem;
 		t = AssCall();
 		break;
@@ -968,7 +969,7 @@ TreeNode* Stm()
 //39
 TreeNode* AssCall()
 {
-	ReadWord();//todo assign
+	//ReadWord();//todo assign
 	TreeNode* t = nullptr;
 	if (tok.Lex == ASSIGN)
 	{
@@ -1023,7 +1024,7 @@ TreeNode* ConditionalStm()
 	{
 		t->child[1] = Stm();
 	}
-	match(THEN);
+	
 	if (tok.Lex == ELSE)
 	{
 		match(ELSE);
@@ -1065,7 +1066,7 @@ TreeNode* InputStm()
 	match(LPAREN);
 	if (t != nullptr && tok.Lex == ID)
 	{
-		((t->attr).name)[0] = tok.Sem;//作为READ语句的标志符名
+		((t->attr).name).push_back(tok.Sem);//作为READ语句的标志符名
 	}
 	match(ID);
 	match(RPAREN);
@@ -1111,7 +1112,8 @@ TreeNode* CallStmRest()
 	if (t != nullptr)
 	{
 		t->child[0] = ActParamList();
-		t->attr.name[0] = temp_name;//临时变量
+		//t->attr.name[0] = temp_name;//临时变量
+        t->attr.name.push_back(temp_name);
 	}
 	match(RPAREN);
 	return t;
@@ -1171,6 +1173,15 @@ TreeNode* Exp()
 			t = p;
 		}
 		//匹配LT EQ
+
+        if (tok.Lex == LT)
+        {
+            match(LT);
+        }
+        else
+        {
+            match(EQ);
+        }
 		if (t != nullptr)
 		{
 			t->child[1] = Simple_exp();//作为运算表达式的right运算简式
@@ -1256,7 +1267,7 @@ TreeNode* factor()
     TreeNode* t = nullptr;
     switch (tok.Lex)
     {
-	case INTC:break;//todo 数字处理部分
+    case INTC:match(INTC); break;
     case ID:variable(); break;
     case LPAREN:
         match(LPAREN);
@@ -1280,6 +1291,7 @@ TreeNode* variable()
     t = new TreeNode;
     if (t != nullptr && tok.Lex == ID)
     {
+        match(ID);
         t->lineno = tok.Lineshow;
         t->name = tok.Sem;//保留当前行号和ID的语义信息
         variMore(t);
@@ -1288,7 +1300,7 @@ TreeNode* variable()
 }
 
 
-//54
+//54 array and member variable
 void variMore(TreeNode* t)
 {
     if(tok.Lex == LMIDPAREN)
@@ -1394,7 +1406,7 @@ void ReadWord()
 		{
 
 
-			if (tmp[1].size() > 1)
+			if (tmp[1].size() > 1 && tmp[1] != "ERROR" && tmp[1] != "EOF")
 			{
 				tmp = split(tmp[1], ',');
 
@@ -1411,14 +1423,22 @@ void ReadWord()
 			}
 			else
 			{
-				for (int i = 0; i < MAXLEX; i++)
-				{
-					if (LexToChar[i].str == tmp[1])
-					{
-						tok.Lex = LexToChar[i].tok;
-						break;
-					}
-				}
+                if (tmp[1] == "ERROR")
+                {
+                    ReadWord();
+                }
+                else
+                {
+                    for (int i = 0; i < MAXLEX; i++)
+                    {
+                        if (LexToChar[i].str == tmp[1])
+                        {
+                            tok.Lex = LexToChar[i].tok;
+                            break;
+                        }
+                    }
+                }
+
 			}
 
 		}
