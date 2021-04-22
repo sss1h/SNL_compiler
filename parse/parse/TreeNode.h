@@ -17,7 +17,7 @@ FILE *listing;
 FILE* Fp;
 int Tokennum;
 
-enum NodeKind { ProK, PheadK, TypeK, VarK, ProcDeck, StmLK, DecK, StmtK, ExpK };
+enum NodeKind { ProK, PheadK, TypeK, VarK, ProcDeck, StmLK, DecK, StmtK, ExpK, ParamListK};
 //enum LexType { ID, reserved_word, INTC};
 enum Dec { ArrayK, CharK, IntegerK, RecordK, IdK };
 enum Stmt { IfK, WhileK, AssignK, ReadK, WriteK };
@@ -67,13 +67,16 @@ struct Attr
 
 struct TreeNode
 {
-	TreeNode* child[3];//指向子语法树节点指针
+	TreeNode* child[3] = { nullptr, nullptr, nullptr };//指向子语法树节点指针
 
-	TreeNode* sibling;//指向兄弟语法树节点指针
+	TreeNode* sibling = nullptr;//指向兄弟语法树节点指针
 	int lineno;//记录源程序行号
-	NodeKind nodekind;//记录语法树节点类型
+	NodeKind nodekind;
+	//string nodekind;
 	Kind kind;//记录语法树节点的具体类型
 	int idnum = 0;//记录一个节点中的标识符个数
+
+
 
 	string name;//节点中标识符名字
 	int* table[104]; //???数组成员是节点中各个标识符在符号表中的入口

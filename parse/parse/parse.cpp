@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <queue>
 #include <string>
 using namespace std;
 TreeNode* parse(void);
@@ -83,11 +84,46 @@ Token tok;
 int main()
 {
 
+
     TreeNode* t = nullptr;
     t = parse();
+    
 
 
     f.close();
+    return 0;
+    //output syntax tree
+    ofstream of("ast.txt");
+    queue<TreeNode*> q;
+    q.push(t);
+    string s = "";
+    while (!q.empty())
+    {
+        TreeNode* p = q.front();
+        q.pop();
+        if (p == nullptr)
+        {
+            s.push_back(' ');
+            continue;
+        }
+        cout << s;
+        if (p->sibling != nullptr)
+        {
+            q.push(p->sibling);
+        }
+        else
+        {
+            q.push(nullptr);
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            if (p->child[i] != nullptr)
+            {
+                q.push(p->child[i]);
+            }
+        }
+    }
+    of.close();
     return 0;
     
 }
@@ -95,8 +131,10 @@ int main()
 TreeNode* parse(void)
 {
     TreeNode* t = nullptr;
+    
     ReadWord();
     t = Program();
+
 
     
 
@@ -112,12 +150,15 @@ TreeNode* parse(void)
 //总程序处理分析程序
 TreeNode* Program(void)
 {
+    
     TreeNode *t = nullptr, *q = nullptr, *s = nullptr;
+ 
     t = ProgramHead();
     q = DeclarePart();
 	
     s = ProgramBody();
     TreeNode*root = new TreeNode;
+    root->nodekind = ProK;
     if (root == nullptr)//创建失败
     {
         ;
@@ -166,7 +207,7 @@ TreeNode* ProgramHead(void)
     //创建新的程序头类型节点
     TreeNode* t = nullptr;
     t = new TreeNode;
-    
+    t->nodekind = PheadK;
  
     match(PROGRAM);
 
@@ -192,6 +233,7 @@ TreeNode* DeclarePart(void)
 {
     TreeNode * typeP = nullptr, * pp = nullptr;
     typeP = new TreeNode;
+    typeP->nodekind = TypeK;
     pp = new TreeNode;
     if (typeP != nullptr)
     {
@@ -203,6 +245,7 @@ TreeNode* DeclarePart(void)
 
     TreeNode* varP = nullptr;
     varP = new TreeNode;
+    varP->nodekind = VarK;
     if (varP != nullptr)
     {
         
@@ -264,6 +307,7 @@ TreeNode* TypeDec(void)
     }
 
     //读下一个单词，跳过此单词
+    ReadWord();
 }
 
 //6.类型声明中的其他函数
@@ -285,6 +329,7 @@ TreeNode* TypeDecList(void)
 {
     TreeNode* t = nullptr;
     t = new TreeNode;
+    t->nodekind = DecK;
     if (t != nullptr)
     {
         string token;
@@ -616,6 +661,7 @@ TreeNode* VarDeclaration(void)
 TreeNode* VarDecList(void)
 {
     TreeNode* t = new TreeNode;
+    t->nodekind = DecK;
     TreeNode* p = nullptr;
     if (t != nullptr)
     {
@@ -716,6 +762,7 @@ TreeNode* ProcDeclaration(void)
 {
 	TreeNode* t = nullptr;
 	t = new TreeNode;
+    t->nodekind = ProcDeck;
 	match(PROCEDURE);
 	if (t != nullptr)
 	{
@@ -810,6 +857,7 @@ TreeNode* Param(void)
 {
 	TreeNode* t = nullptr;
 	t = new TreeNode;
+    t->nodekind = ParamListK;
 	if (t != nullptr)
 	{
 		if (tok.Lex == INTEGER || tok.Lex == CHAR1 || tok.Lex == RECORD || tok.Lex == ARRAY || tok.Lex == ID)
@@ -894,7 +942,7 @@ TreeNode* ProgramBody()
 {
 	TreeNode* t = nullptr;
 	t = new TreeNode;
-	
+    t->nodekind = StmLK;
 	match(BEGIN1);
 	if (t != nullptr)
 	{
